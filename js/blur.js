@@ -9,47 +9,23 @@
 
         // You are given a 3x3 kernel but you need to create a proper kernel
         // using the given kernel size
-		var kernel;
-		switch (kernelSize)
-		{
-			case 3:
-				kernel = [ [1, 1, 1], 
-						   [1, 1, 1], 
-						   [1, 1, 1] ];
-				break;
-				
-			case 5:
-				kernel = [ [1, 1, 1, 1, 1], 
-						   [1, 1, 1, 1, 1], 
-						   [1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1] ];
-				break;
-				
-			case 7:
-				kernel = [ [1, 1, 1, 1, 1, 1, 1], 
-						   [1, 1, 1, 1, 1, 1, 1], 
-						   [1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1] ];
-				break;
-			
-			case 9:
-				kernel = [ [1, 1, 1, 1, 1, 1, 1, 1, 1], 
-						   [1, 1, 1, 1, 1, 1, 1, 1, 1], 
-						   [1, 1, 1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1, 1, 1],
-						   [1, 1, 1, 1, 1, 1, 1, 1, 1] ];
-				break;
-		}
-		var kernelLimit = (kernelSize - 1) / 2;
+        var kernel = Array(kernelSize).fill(Array(kernelSize).fill(1))
+        // var kernel = [ [0, 0, 0], [1, 1, 1], [0, 0, 0] ];
 
+        var kernelSum = 0;
+        kernelSum = kernelSize*kernelSize;
+
+        // my prev code, no use. 
+        // for (var i = 0; i < kernelSize; i++) {
+        //     for (var j = 0; j < kernelSize; j++) {
+        //         kernelSum = kernelSum + kernel[i][j];
+        //     }
+        // }
+
+        var w = inputData.width*4;
+        var offset = (kernelSize-1)/2;
+
+        // console.log(offset);
         /**
          * TODO: You need to extend the blur effect to include different
          * kernel sizes and then apply the kernel to the entire image
@@ -60,22 +36,20 @@
             for (var x = 0; x < inputData.width; x++) {
                 // Use imageproc.getPixel() to get the pixel values
                 // over the kernel
-
                 // Then set the blurred result to the output data
-				let index = (x + y * outputData.width) * 4;
-				for (let j = -kernelLimit; j <= kernelLimit; ++j)
-				{
-					for (let i = -kernelLimit; i <= kernelLimit; ++i)
-					{
-						let pixel = imageproc.getPixel(inputData, x + i, y + j);
-						outputData.data[index] += kernel[i + kernelLimit][j + kernelLimit] * pixel.r;
-						outputData.data[index + 1] += kernel[i + kernelLimit][j + kernelLimit] * pixel.g;
-						outputData.data[index + 2] += kernel[i + kernelLimit][j + kernelLimit] * pixel.b;
-					}
-				}
-				outputData.data[index] /= (kernelSize * kernelSize);
-				outputData.data[index + 1] /= (kernelSize * kernelSize);
-				outputData.data[index + 2] /= (kernelSize * kernelSize);
+                var k = (x + y * outputData.width) * 4;
+
+                for (var i = -offset; i < offset+1; i++) {
+                    for (var j = -offset; j < offset+1; j++) {
+                        var pixel = imageproc.getPixel(inputData,x+i,y+j);
+                        outputData.data[k] = outputData.data[k] + pixel.r * kernel[i+offset][j+offset];
+                        outputData.data[k+1] = outputData.data[k+1] + pixel.g * kernel[i+offset][j+offset];
+                        outputData.data[k+2] = outputData.data[k+2] + pixel.b * kernel[i+offset][j+offset];
+                    }
+                }
+                outputData.data[k] = outputData.data[k]/kernelSum;
+                outputData.data[k+1] = outputData.data[k+1]/kernelSum;
+                outputData.data[k+2] = outputData.data[k+2]/kernelSum;
             }
         }
     } 

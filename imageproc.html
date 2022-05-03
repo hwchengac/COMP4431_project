@@ -79,6 +79,7 @@
                             <li><a class="dropdown-item" href="#threshold">Threshold</a></li>
                             <li><a class="dropdown-item" href="#comic-color">Comic Colour</a></li>
                             <li><a class="dropdown-item" href="#auto-contrast">Automatic Contrast</a></li>
+                            <li><a class="dropdown-item" href="#USM">Unsharp Mask</a></li>
                         </ul>
                     </li>
 
@@ -274,6 +275,59 @@
                         </div>
                     </div>
 
+<!-- UI for USM -->
+                    <!-- Unsharp Mask -->
+                    <div class="tab-pane" id="USM">
+                        <div class="container-fluid">
+                            <div class="row">
+
+                                <div class="col-3">
+                                    <label for="blur-input">Blur:</label>
+                                    <select class="custom-select" id="USM-blur">
+                                        <option value="auto">Auto</option>
+                                        <option value="gaussian">Gaussian Blur</option>
+                                        <option value="box">Box Blur</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-3">
+                                    <label for="">Radius:</label>
+                                    <div class="input-group">
+                                        <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
+                                            <input class="custom-range" id="USM-radius" type="range" value="1" min="0" max="120" step="1"
+                                             oninput="$(this).parents('.input-group').find('.input-group-text').html($(this).val())">
+                                        </div>
+                                        <div class="input-group-append"><span class="input-group-text d-block" style="width: 3.5em">1</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <label for="">Amount:</label>
+                                    <div class="input-group">
+                                        <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
+                                            <input class="custom-range" id="USM-amount" type="range" value="1" min="0" max="5" step="0.1"
+                                             oninput="$(this).parents('.input-group').find('.input-group-text').html($(this).val())">
+                                        </div>
+                                        <div class="input-group-append"><span class="input-group-text d-block" style="width: 3.5em">1</span></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <label for="">Threshold:</label>
+                                    <div class="input-group">
+                                        <div class="row flex-fill align-items-center mx-0 px-2 border rounded-left">
+                                            <input class="custom-range" id="USM-threshold" type="range" value="128" min="0" max="255" step="1"
+                                             oninput="$(this).parents('.input-group').find('.input-group-text').html($(this).val())">
+                                        </div>
+                                        <div class="input-group-append"><span class="input-group-text d-block" style="width: 3.5em">128</span></div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Blur -->
                     <div class="tab-pane" id="blur">
                         <div class="container-fluid">
@@ -432,5 +486,9 @@
     <script src="js/outline.js"></script>
     <script src="js/main.js"></script>
     <script src="js/layers.js"></script>
+
+    <!-- import our script usm.js -->
+    <script src="js/usm.js"></script>
+
 </body>
 </html>
