@@ -33,7 +33,6 @@
             // console.log("USM - show box blur");
             // return;
 
-
         }else{
             console.log("wtf is this blur?");
         }
@@ -48,7 +47,8 @@
             outputData.data[i + 1] = hsvData.data[i + 1];
             var diff = hsvData.data[i + 2] - blurData.data[i + 2];
             if(diff*255 > threshold){
-                outputData.data[i + 2] = hsvData.data[i + 2] + (hsvData.data[i + 2] - blurData.data[i+2]) * amount;
+                //formular from wiki https://en.wikipedia.org/wiki/Unsharp_masking
+                outputData.data[i + 2] = hsvData.data[i + 2] + ((hsvData.data[i + 2] - blurData.data[i+2]) * amount);
             }else{
                 outputData.data[i + 2] = hsvData.data[i + 2];
             }

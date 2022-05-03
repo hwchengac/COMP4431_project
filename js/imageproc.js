@@ -109,8 +109,6 @@
                 "b": Math.round(b * 255)};
     }
 
-
-
     /*
      * Get a pixel colour from an ImageData object
      * 
