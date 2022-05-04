@@ -61,7 +61,7 @@
 		return gaussian_value;
 	}
 	
-	imageproc.gaussianBlur = function(inputData, outputData, sigma, size = 3)
+	imageproc.gaussianBlur = function(inputData, outputData, sigma, size = 7)
 	{
 		console.log("Applying Gaussian Blur...");
 		var offset = (size - 1) / 2;
@@ -96,9 +96,9 @@
 						outputData.data[index + 2] += gaussian_kernel[i + offset][j + offset] * pixel.b;
 					}
 				}
-				outputData.data[index] = outputData.data[index] / divisor;
-                outputData.data[index + 1] = outputData.data[index + 1] / divisor;
-                outputData.data[index + 2] = outputData.data[index + 2] / divisor;
+				outputData.data[index] = Math.floor(outputData.data[index] / divisor);
+                outputData.data[index + 1] = Math.floor(outputData.data[index + 1] / divisor);
+                outputData.data[index + 2] = Math.floor(outputData.data[index + 2] / divisor);
 			}
 		}
 		

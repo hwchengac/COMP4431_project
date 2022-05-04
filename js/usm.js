@@ -23,7 +23,6 @@
         if(blur == "gaussian")
 		{
             imageproc.gaussianBlur(inputData, blurData, radius);
-
             // For debug - show box blured img
             // imageproc.copyImageData(blurData, outputData);
             // console.log("USM - show gaussian blur");
@@ -63,7 +62,7 @@
 
         // Sharpen the Masked area's value, and retain the rest.
         for (let i = 0; i < inputData.data.length; i += 4)
-		{			
+		{
 			// Modified version
 			let hsv_input = imageproc.fromRGBToHSV(inputData.data[i], inputData.data[i + 1], inputData.data[i + 2]);
 			let hsv_blurred = imageproc.fromRGBToHSV(blurData.data[i], blurData.data[i + 1], blurData.data[i + 2]);
@@ -83,8 +82,6 @@
             
         }
 
-
-
         // No use, keep for record.
 
         // var hsvData = imageproc.createBuffer(inputData);
@@ -100,6 +97,17 @@
         // imageproc.fromRGBToHSV_img(inputData,hsvData);
         // imageproc.fromRGBToHSV_img(blurData,blurData);
         // imageproc.fromHSVToRGB_img(outputData,outputData);
+
+        // // // For test only, just a prove of concept
+        // // // for (var i = 0; i < inputData.data.length; i += 4) {
+        // // //     outputData.data[i]     = hsvData.data[i];
+        // // //     outputData.data[i + 1] = hsvData.data[i + 1];
+        // // //     outputData.data[i + 2] = 2 * hsvData.data[i + 2] - blurData.data[i+2];
+        // // // }
+
+
+        // // // imageproc.fromHSVToRGB_img(outputData,outputData);
+
         console.log("USM-Done");
     }
 
