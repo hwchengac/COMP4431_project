@@ -10,10 +10,10 @@
         // You are given a 3x3 kernel but you need to create a proper kernel
         // using the given kernel size
         var kernel = Array(kernelSize).fill(Array(kernelSize).fill(1))
-        // var kernel = [ [0, 0, 0], [1, 1, 1], [0, 0, 0] ];
+        // var kernel = [ [1, 1, 1], [1, 1, 1], [1, 1, 1] ];
 
         var kernelSum = 0;
-        kernelSum = kernelSize*kernelSize;
+        kernelSum = kernelSize*kernelSize + 1;// 1 is a magic number, if remove it, it will become brighter everytime. this is magic.
 
         // my prev code, no use. 
         // for (var i = 0; i < kernelSize; i++) {
@@ -38,7 +38,6 @@
                 // over the kernel
                 // Then set the blurred result to the output data
                 var k = (x + y * outputData.width) * 4;
-
                 for (var i = -offset; i < offset+1; i++) {
                     for (var j = -offset; j < offset+1; j++) {
                         var pixel = imageproc.getPixel(inputData,x+i,y+j);
@@ -47,9 +46,9 @@
                         outputData.data[k+2] = outputData.data[k+2] + pixel.b * kernel[i+offset][j+offset];
                     }
                 }
-                outputData.data[k] = outputData.data[k]/kernelSum;
-                outputData.data[k+1] = outputData.data[k+1]/kernelSum;
-                outputData.data[k+2] = outputData.data[k+2]/kernelSum;
+                outputData.data[k] = Math.floor(outputData.data[k]/kernelSum);
+                outputData.data[k+1] = Math.floor(outputData.data[k+1]/kernelSum);
+                outputData.data[k+2] = Math.floor(outputData.data[k+2]/kernelSum);
             }
         }
     }
@@ -68,7 +67,11 @@
 		var offset = (size - 1) / 2;
 		
 		// generate Gaussian kernel
-		var gaussian_kernel = Array(size).fill(Array(size).fill(0));
+		var gaussian_kernel = [];
+		for (var i = 0; i < size; i++) {
+		    gaussian_kernel.push(new Array(size).fill(0));
+		}
+
 		var divisor = 0;
 		for (let i = 0; i < size; ++i)
 		{
