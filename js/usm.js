@@ -25,6 +25,7 @@
         if(blur == "gaussian")
 		{
             imageproc.gaussianBlur(inputData, blurData, radius);
+			imageproc.copyImageData(blurData, outputData);
         }
 		else if(blur == "box" | true)
 		{
@@ -49,15 +50,15 @@
         // Sharpen the Masked area's value, and retain the rest.
         for (let i = 0; i < inputData.data.length; i += 4)
 		{
-            // // outputData.data[i]     = hsvData.data[i];
-            // // outputData.data[i + 1] = hsvData.data[i + 1];
-            // // var diff = hsvData.data[i + 2] - blurData.data[i + 2];
-            // // if(diff*255 > threshold){
-                // // //formular from wiki https://en.wikipedia.org/wiki/Unsharp_masking
-                // // outputData.data[i + 2] = hsvData.data[i + 2] + ((hsvData.data[i + 2] - blurData.data[i+2]) * amount);
-            // // }else{
-                // // outputData.data[i + 2] = hsvData.data[i + 2];
-            // // }
+            // // // outputData.data[i]     = hsvData.data[i];
+            // // // outputData.data[i + 1] = hsvData.data[i + 1];
+            // // // var diff = hsvData.data[i + 2] - blurData.data[i + 2];
+            // // // if(diff*255 > threshold){
+                // // // //formular from wiki https://en.wikipedia.org/wiki/Unsharp_masking
+                // // // outputData.data[i + 2] = hsvData.data[i + 2] + ((hsvData.data[i + 2] - blurData.data[i+2]) * amount);
+            // // // }else{
+                // // // outputData.data[i + 2] = hsvData.data[i + 2];
+            // // // }
 			
 			// Modified version
 			let hsv_input = imageproc.fromRGBToHSV(inputData.data[i], inputData.data[i + 1], inputData.data[i + 2]);
@@ -78,15 +79,15 @@
             
         }
 
-        // // For test only, just a prove of concept
-        // // for (var i = 0; i < inputData.data.length; i += 4) {
-        // //     outputData.data[i]     = hsvData.data[i];
-        // //     outputData.data[i + 1] = hsvData.data[i + 1];
-        // //     outputData.data[i + 2] = 2 * hsvData.data[i + 2] - blurData.data[i+2];
-        // // }
+        // // // For test only, just a prove of concept
+        // // // for (var i = 0; i < inputData.data.length; i += 4) {
+        // // //     outputData.data[i]     = hsvData.data[i];
+        // // //     outputData.data[i + 1] = hsvData.data[i + 1];
+        // // //     outputData.data[i + 2] = 2 * hsvData.data[i + 2] - blurData.data[i+2];
+        // // // }
 
 
-        // // imageproc.fromHSVToRGB_img(outputData,outputData);
+        // // // imageproc.fromHSVToRGB_img(outputData,outputData);
         console.log("USM-Done");
     }
 
