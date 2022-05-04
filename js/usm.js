@@ -18,19 +18,35 @@
         if(blur == "auto")
         	blur = radius>10? "box":"gaussian";
 
-
         var blurData = imageproc.createBuffer(inputData);
-        // var hsvData = imageproc.createBuffer(inputData);
 
         if(blur == "gaussian")
 		{
             imageproc.gaussianBlur(inputData, blurData, radius);
-			imageproc.copyImageData(blurData, outputData);
+            // For debug - show box blured img
+            // imageproc.copyImageData(blurData, outputData);
+            // console.log("USM - show gaussian blur");
+            // return;
         }
 		else if(blur == "box" | true)
 		{
-            var boxRadius = radius*2+1;
-            imageproc.blur(inputData, blurData, boxRadius);
+
+            // Why we use more times of blur? 1. it is faster, 2. it is closer to gaussian blur
+            // From wiki: https://en.wikipedia.org/wiki/Box_blur
+            // Box blurs are frequently used to approximate a Gaussian blur.
+            // By the central limit theorem, repeated application of a box blur will approximate a Gaussian blur.
+
+            var blurData_temp = imageproc.createBuffer(inputData);
+            imageproc.copyImageData(inputData, blurData_temp);
+            for (var i = 0; i < radius*2; i++) {
+                imageproc.copyImageData(blurData_temp, blurData);
+                imageproc.blur(blurData, blurData_temp, 3);
+            }
+            imageproc.copyImageData(blurData_temp, blurData);
+
+            // Large kernal version, takes more time to run.
+            // var boxRadius = radius*2+1;
+            // imageproc.blur(inputData, blurData, boxRadius);
 
             // For debug - show box blured img
             // imageproc.copyImageData(blurData, outputData);
@@ -43,23 +59,10 @@
             console.log("wtf is this blur?");
         }
 
-        //Unsharp will only apply on Value, so convert ori img and blur img to HSV
-        // imageproc.fromRGBToHSV_img(inputData,hsvData);
-        // imageproc.fromRGBToHSV_img(blurData,blurData);
 
         // Sharpen the Masked area's value, and retain the rest.
         for (let i = 0; i < inputData.data.length; i += 4)
 		{
-            // // // outputData.data[i]     = hsvData.data[i];
-            // // // outputData.data[i + 1] = hsvData.data[i + 1];
-            // // // var diff = hsvData.data[i + 2] - blurData.data[i + 2];
-            // // // if(diff*255 > threshold){
-                // // // //formular from wiki https://en.wikipedia.org/wiki/Unsharp_masking
-                // // // outputData.data[i + 2] = hsvData.data[i + 2] + ((hsvData.data[i + 2] - blurData.data[i+2]) * amount);
-            // // // }else{
-                // // // outputData.data[i + 2] = hsvData.data[i + 2];
-            // // // }
-			
 			// Modified version
 			let hsv_input = imageproc.fromRGBToHSV(inputData.data[i], inputData.data[i + 1], inputData.data[i + 2]);
 			let hsv_blurred = imageproc.fromRGBToHSV(blurData.data[i], blurData.data[i + 1], blurData.data[i + 2]);
@@ -79,6 +82,22 @@
             
         }
 
+        // No use, keep for record.
+
+        // var hsvData = imageproc.createBuffer(inputData);
+
+        // // For test only, just a prove of concept
+        // // for (var i = 0; i < inputData.data.length; i += 4) {
+        // //     outputData.data[i]     = hsvData.data[i];
+        // //     outputData.data[i + 1] = hsvData.data[i + 1];
+        // //     outputData.data[i + 2] = 2 * hsvData.data[i + 2] - blurData.data[i+2];
+        // // }
+
+        //Unsharp will only apply on Value, so convert ori img and blur img to HSV
+        // imageproc.fromRGBToHSV_img(inputData,hsvData);
+        // imageproc.fromRGBToHSV_img(blurData,blurData);
+        // imageproc.fromHSVToRGB_img(outputData,outputData);
+
         // // // For test only, just a prove of concept
         // // // for (var i = 0; i < inputData.data.length; i += 4) {
         // // //     outputData.data[i]     = hsvData.data[i];
@@ -88,6 +107,7 @@
 
 
         // // // imageproc.fromHSVToRGB_img(outputData,outputData);
+
         console.log("USM-Done");
     }
 
