@@ -67,7 +67,11 @@
 		var offset = (size - 1) / 2;
 		
 		// generate Gaussian kernel
-		var gaussian_kernel = Array(size).fill(Array(size).fill(0));
+		var gaussian_kernel = [];
+		for (var i = 0; i < size; i++) {
+		    gaussian_kernel.push(new Array(size).fill(0));
+		}
+
 		var divisor = 0;
 		for (let i = 0; i < size; ++i)
 		{
