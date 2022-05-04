@@ -62,7 +62,7 @@
 		return gaussian_value;
 	}
 	
-	imageproc.gaussianBlur = function(inputData, outputData, sigma, size = 3)
+	imageproc.gaussianBlur = function(inputData, outputData, sigma, size = 7)
 	{
 		console.log("Applying Gaussian Blur...");
 		var offset = (size - 1) / 2;
