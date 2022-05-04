@@ -52,6 +52,57 @@
                 outputData.data[k+2] = outputData.data[k+2]/kernelSum;
             }
         }
-    } 
+    }
+	
+	function gaussianFunction(sigma, u, v)
+	{
+		let e_exp = -(u * u + v * v) / (2 * sigma * sigma);
+		let denominator = 2 * Math.PI * sigma * sigma;
+		let gaussian_value = Math.pow(Math.E, e_exp) / denominator;
+		return gaussian_value;
+	}
+	
+	imageproc.gaussianBlur = function(inputData, outputData, sigma, size = 3)
+	{
+		console.log("Applying Gaussian Blur...");
+		var offset = (size - 1) / 2;
+		
+		// generate Gaussian kernel
+		var gaussian_kernel = Array(size).fill(Array(size).fill(0));
+		var divisor = 0;
+		for (let i = 0; i < size; ++i)
+		{
+			for (let j = 0; j < size; ++j)
+			{
+				gaussian_kernel[i][j] = gaussianFunction(sigma, j - offset, i - offset);
+				divisor += gaussian_kernel[i][j];
+				// console.log("index j: " + (j - offset) + " index i: " + (i - offset) + " kernel value: " + gaussian_kernel[i][j]);
+			}
+		}
+		
+		for (let y = 0; y < inputData.height; ++y)
+		{
+			for (let x = 0; x < inputData.width; ++x)
+			{
+				let index = (x + y * outputData.width) * 4;
+				
+				for (let i = -offset; i <= offset; ++i)
+				{
+					for (let j = -offset; j <= offset; ++j)
+					{
+						let pixel = imageproc.getPixel(inputData, x + j, y + i);
+						
+						outputData.data[index] 	   += gaussian_kernel[i + offset][j + offset] * pixel.r;
+						outputData.data[index + 1] += gaussian_kernel[i + offset][j + offset] * pixel.g;
+						outputData.data[index + 2] += gaussian_kernel[i + offset][j + offset] * pixel.b;
+					}
+				}
+				outputData.data[index] = outputData.data[index] / divisor;
+                outputData.data[index + 1] = outputData.data[index + 1] / divisor;
+                outputData.data[index + 2] = outputData.data[index + 2] / divisor;
+			}
+		}
+		
+	}
 
 }(window.imageproc = window.imageproc || {}));
