@@ -54,6 +54,18 @@
                 var percentage = parseInt($("#auto-contrast-percentage").val()) / 100.0;
                 imageproc.autoContrast(inputImage, outputImage, type, percentage);
                 break;
+
+            // Apply unsharp mask
+            // This trigger imageproc in usm.js
+            case "USM":
+
+                var blur = $("#USM-blur").val();
+                var radius = parseInt($("#USM-radius").val());
+                var amount = parseFloat($("#USM-amount").val());
+                var threshold = parseInt($("#USM-threshold").val());
+
+                imageproc.usm(inputImage, outputImage, blur, radius, amount, threshold);
+                break;
         }
     }
 
