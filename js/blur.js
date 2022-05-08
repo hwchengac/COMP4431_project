@@ -83,6 +83,7 @@
 			}
 		}
 		
+		// var debug_no = 0;
 		for (let y = 0; y < inputData.height; ++y)
 		{
 			for (let x = 0; x < inputData.width; ++x)
@@ -103,6 +104,12 @@
 				outputData.data[index] = Math.floor(outputData.data[index] / divisor);
                 outputData.data[index + 1] = Math.floor(outputData.data[index + 1] / divisor);
                 outputData.data[index + 2] = Math.floor(outputData.data[index + 2] / divisor);
+				
+				// if (debug_no < 400 && debug_no > 360)
+				// {
+					// console.log("pixel: " + outputData.data[index]);
+				// }
+				// debug_no += 4;
 			}
 		}
 		
