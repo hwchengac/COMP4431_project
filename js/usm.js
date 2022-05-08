@@ -23,7 +23,7 @@
         if(blur == "gaussian")
 		{
             // var size = 2 * Math.ceil(radius - 0.5) + 1; variable kernal size, according to GIMP code.
-            imageproc.gaussianBlur(inputData, blurData, radius);
+            imageproc.gaussianBlur(inputData, blurData, radius, 7);
             // For debug - show box blured img
             // imageproc.copyImageData(blurData, outputData);
             // console.log("USM - show gaussian blur");
