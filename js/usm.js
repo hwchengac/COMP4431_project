@@ -39,7 +39,7 @@
 
             var blurData_temp = imageproc.createBuffer(inputData);
             imageproc.copyImageData(inputData, blurData_temp);
-            for (var i = 0; i < radius*2; i++) {
+            for (var i = 0; i < radius*4; i++) {
                 imageproc.copyImageData(blurData_temp, blurData);
                 imageproc.blur(blurData, blurData_temp, 3);
             }

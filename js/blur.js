@@ -13,7 +13,7 @@
         // var kernel = [ [1, 1, 1], [1, 1, 1], [1, 1, 1] ];
 
         var kernelSum = 0;
-        kernelSum = kernelSize*kernelSize + 1;// 1 is a magic number, if remove it, it will become brighter everytime. this is magic.
+        kernelSum = kernelSize*kernelSize + 0.999995;// it is a magic number, if remove it, it will become brighter everytime. this is magic.
 
         // my prev code, no use. 
         // for (var i = 0; i < kernelSize; i++) {
@@ -46,9 +46,9 @@
                         outputData.data[k+2] = outputData.data[k+2] + pixel.b * kernel[i+offset][j+offset];
                     }
                 }
-                outputData.data[k] = Math.floor(outputData.data[k]/kernelSum);
-                outputData.data[k+1] = Math.floor(outputData.data[k+1]/kernelSum);
-                outputData.data[k+2] = Math.floor(outputData.data[k+2]/kernelSum);
+                outputData.data[k] = outputData.data[k]/kernelSum;
+                outputData.data[k+1] = outputData.data[k+1]/kernelSum;
+                outputData.data[k+2] = outputData.data[k+2]/kernelSum;
             }
         }
     }
