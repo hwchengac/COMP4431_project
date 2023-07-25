@@ -1,3 +1,7 @@
-# COMP4431_project
- unsharp mask project
-* When you use "auto" or "box" blur mode, you may need to wait a long time for the program to run if you use a large radius(>50). If you don't want to wait for a long time, avoid using large radius.
+How to run it?
+
+To run the web app, you need to host a local server. Download this folder. Install python and run the following command in the directory:
+
+py -m http.server 80
+
+Then you will host a local server. type "localhost" in your browser and you will see a list of files. Click "imageproc.html" to open the web app.
